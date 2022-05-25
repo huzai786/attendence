@@ -64,6 +64,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 def login(request):
     if request.method == 'POST':
-        if request['username']:
+        if request.POST.get('username'):
             username = request.POST.get('username')
-            
+        if request.POST.get('password'):
+            password = request.POST.get('password')
+    
