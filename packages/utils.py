@@ -1,5 +1,6 @@
 from datetime import datetime
 import jwt
+import pickle
 
 SECRET_KEY = "\xf9\xe4p(\xa9\x12\x1a!\x94\x8d\x1c\x99l\xc7\xb7e\xc7c\x86\x02MJ\xa0"
 
@@ -29,3 +30,12 @@ def decode_auth_token(auth_token):
         return 'Signature expired. Please log in again.'
     except jwt.InvalidTokenError:
         return 'Invalid token. Please log in again.'
+
+
+def arry_t_byt(encoding):
+    byt = pickle.dumps(encoding)
+    return byt
+
+def byt_t_arry(byte):
+    array = pickle.loads(byte)
+    return [array]

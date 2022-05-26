@@ -2,6 +2,80 @@ from django.db import models
 
 
 
+class AdminUsers(models.Model):
+    user_name = models.CharField(max_length=100, unique=True)
+    pwd = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=100, blank=True, null=True)
+    comp_name = models.CharField(max_length=100, blank=True, null=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=20)
+    status = models.CharField(max_length=7)
+    date_created = models.DateTimeField()
+    last_modified = models.DateTimeField(blank=True, null=True)
+    last_login = models.DateTimeField(blank=True, null=True)
+    ip = models.CharField(max_length=25, blank=True, null=True)
+    user_agent = models.TextField(blank=True, null=True)
+    permissions = models.TextField()
+    user_role_id = models.IntegerField()
+    activation_key = models.CharField(max_length=255)
+    is_deleted = models.CharField(max_length=1)
+    facility_manager = models.CharField(max_length=120)
+    facility_id = models.IntegerField()
+    salary = models.IntegerField()
+
+
+    class Meta:
+        managed = True
+        db_table = 'admin_users'
+
+
+class TempEmployees(models.Model):
+    te_id = models.AutoField(primary_key=True)
+    te_first_name = models.CharField(max_length=255)
+    te_last_name = models.CharField(max_length=255)
+    te_cnic = models.CharField(max_length=15)
+    te_attandance = models.CharField(max_length=10)
+    te_check_in = models.DateTimeField()
+    te_check_out = models.DateTimeField(blank=True, null=True)
+    te_facility_id = models.IntegerField()
+    te_supervisor_id = models.IntegerField()
+    te_designation = models.CharField(max_length=256, blank=True, null=True)
+    te_shift = models.CharField(max_length=256, blank=True, null=True)
+    te_shift_timing = models.CharField(max_length=256, blank=True, null=True)
+    te_phone = models.CharField(max_length=20)
+    te_email = models.CharField(max_length=255)
+    te_address = models.CharField(max_length=500)
+    te_image = models.TextField(blank=True, null=True)
+    te_salary = models.CharField(max_length=255)
+    te_created_at = models.DateTimeField()
+    te_status = models.IntegerField()
+    te_is_deleted = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'temp_employees'
+
+class UserRole(models.Model):
+    page_id = models.AutoField(primary_key=True)
+    role_title = models.CharField(max_length=150)
+    permission = models.TextField()
+    page_status = models.CharField(max_length=3)
+    created_by = models.IntegerField()
+    modified_by = models.IntegerField()
+    date_created = models.DateTimeField()
+    date_updated = models.DateTimeField()
+    is_deleted = models.CharField(max_length=1)
+    facility_id = models.IntegerField()
+    department_id = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'user_role'
+
+    def __str__(self):
+        return str(self.facility_id)
+
+
 class Facility(models.Model):
     facility_id = models.AutoField(primary_key=True)
     facility_client_id = models.IntegerField()
@@ -49,6 +123,74 @@ class Facility(models.Model):
     def __str__(self):
         return str(self.facility_name)
 
+
+class Employee(models.Model):
+    emp_id = models.AutoField(primary_key=True)
+    title_id = models.IntegerField()
+    emp_first_name = models.CharField(max_length=100)
+    emp_last_name = models.CharField(max_length=100, blank=True, null=True)
+    emp_police_verification = models.CharField(max_length=100)
+    emp_cnic = models.CharField(max_length=15)
+    emp_passport_no = models.CharField(max_length=11)
+    emp_religion = models.CharField(max_length=50)
+    emp_dob = models.DateTimeField()
+    emp_doj = models.DateTimeField()
+    emp_dot = models.DateTimeField(blank=True, null=True)
+    emp_termination_reason = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by = models.CharField(max_length=50)
+    emp_reffered_by_cnic = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_mobile = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_phone = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_email = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_home_address = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_office_address = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_2 = models.CharField(max_length=50)
+    emp_reffered_by_2_cnic = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_2_mobile = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_2_phone = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_2_email = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_2_home_address = models.CharField(max_length=512, blank=True, null=True)
+    emp_reffered_by_2_office_address = models.CharField(max_length=512, blank=True, null=True)
+    emp_eobi_no = models.IntegerField()
+    emp_marital_status = models.CharField(max_length=100)
+    emp_no = models.IntegerField()
+    emp_gender = models.CharField(max_length=50)
+    emp_blood_group = models.CharField(max_length=50)
+    emp_phone = models.CharField(max_length=50)
+    emp_phone_2 = models.CharField(max_length=50)
+    emp_email = models.CharField(max_length=100)
+    emp_email_2 = models.CharField(max_length=100)
+    emp_mobile = models.CharField(max_length=50)
+    emp_mobile_2 = models.CharField(max_length=50)
+    emp_age = models.IntegerField()
+    emp_status = models.CharField(max_length=50, blank=True, null=True)
+    emp_department_id = models.IntegerField()
+    emp_designation_id = models.IntegerField()
+    emp_created_on = models.DateTimeField()
+    emp_created_by = models.CharField(max_length=50)
+    emp_modified_on = models.DateTimeField()
+    emp_modified_by = models.CharField(max_length=50)
+    emp_is_active = models.IntegerField()
+    emp_is_delete = models.IntegerField()
+    emp_picture = models.TextField(blank=True, null=True)
+    emp_id_mark = models.CharField(max_length=15)
+    emp_gratuity_fun = models.CharField(max_length=15)
+    emp_provident_fund = models.CharField(max_length=15)
+    emp_facility_id = models.IntegerField()
+    emp_monthly_article_deduction = models.IntegerField()
+    emp_account_title = models.CharField(max_length=120)
+    emp_bank_branch_name = models.CharField(max_length=30, blank=True, null=True)
+    emp_bank_branch_code = models.CharField(max_length=30, blank=True, null=True)
+    emp_account_number = models.CharField(max_length=30)
+    emp_user_id = models.IntegerField()
+    emp_encoding = models.BinaryField(blank=True, null=True, max_length=10000)
+
+    class Meta:
+        managed = False
+        db_table = 'employee'
+
+    def __str__(self):
+        return str(self.emp_first_name + self.emp_last_name)
 
 class EmployeeFacility(models.Model):
     ef_id = models.AutoField(primary_key=True)
@@ -114,98 +256,9 @@ class Accounts(models.Model):
     def __str__(self):
         return str(self.a_name)
 
-class Employee(models.Model):
-    emp_id = models.AutoField(primary_key=True)
-    title_id = models.IntegerField()
-    emp_first_name = models.CharField(max_length=100)
-    emp_last_name = models.CharField(max_length=100, blank=True, null=True)
-    emp_police_verification = models.CharField(max_length=100)
-    emp_cnic = models.CharField(max_length=15)
-    emp_passport_no = models.CharField(max_length=11)
-    emp_religion = models.CharField(max_length=50)
-    emp_dob = models.DateTimeField()
-    emp_doj = models.DateTimeField()
-    emp_dot = models.DateTimeField(blank=True, null=True)
-    emp_termination_reason = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by = models.CharField(max_length=50)
-    emp_reffered_by_cnic = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_mobile = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_phone = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_email = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_home_address = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_office_address = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_2 = models.CharField(max_length=50)
-    emp_reffered_by_2_cnic = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_2_mobile = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_2_phone = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_2_email = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_2_home_address = models.CharField(max_length=512, blank=True, null=True)
-    emp_reffered_by_2_office_address = models.CharField(max_length=512, blank=True, null=True)
-    emp_eobi_no = models.IntegerField()
-    emp_marital_status = models.CharField(max_length=100)
-    emp_no = models.IntegerField()
-    emp_gender = models.CharField(max_length=50)
-    emp_blood_group = models.CharField(max_length=50)
-    emp_phone = models.CharField(max_length=50)
-    emp_phone_2 = models.CharField(max_length=50)
-    emp_email = models.CharField(max_length=100)
-    emp_email_2 = models.CharField(max_length=100)
-    emp_mobile = models.CharField(max_length=50)
-    emp_mobile_2 = models.CharField(max_length=50)
-    emp_age = models.IntegerField()
-    emp_status = models.CharField(max_length=50, blank=True, null=True)
-    emp_department_id = models.IntegerField()
-    emp_designation_id = models.IntegerField()
-    emp_created_on = models.DateTimeField()
-    emp_created_by = models.CharField(max_length=50)
-    emp_modified_on = models.DateTimeField()
-    emp_modified_by = models.CharField(max_length=50)
-    emp_is_active = models.IntegerField()
-    emp_is_delete = models.IntegerField()
-    emp_picture = models.TextField(blank=True, null=True)
-    emp_id_mark = models.CharField(max_length=15)
-    emp_gratuity_fun = models.CharField(max_length=15)
-    emp_provident_fund = models.CharField(max_length=15)
-    emp_facility_id = models.IntegerField()
-    emp_monthly_article_deduction = models.IntegerField()
-    emp_account_title = models.CharField(max_length=120)
-    emp_bank_branch_name = models.CharField(max_length=30, blank=True, null=True)
-    emp_bank_branch_code = models.CharField(max_length=30, blank=True, null=True)
-    emp_account_number = models.CharField(max_length=30)
-    emp_user_id = models.IntegerField()
-    emp_encoding = models.TextField(blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'employee'
 
-    def __str__(self):
-        return str(self.emp_first_name + self.emp_last_name)
 
-class AdminUsers(models.Model):
-    user_name = models.CharField(max_length=100)
-    pwd = models.CharField(max_length=100)
-    full_name = models.CharField(max_length=100, blank=True, null=True)
-    comp_name = models.CharField(max_length=100, blank=True, null=True)
-    email = models.CharField(max_length=100, blank=True, null=True)
-    phone = models.CharField(max_length=20)
-    status = models.CharField(max_length=7)
-    date_created = models.DateTimeField()
-    last_modified = models.DateTimeField(blank=True, null=True)
-    last_login = models.DateTimeField(blank=True, null=True)
-    ip = models.CharField(max_length=25, blank=True, null=True)
-    user_agent = models.TextField(blank=True, null=True)
-    permissions = models.TextField()
-    user_role_id = models.IntegerField()
-    activation_key = models.CharField(max_length=255)
-    is_deleted = models.CharField(max_length=1)
-    facility_manager = models.CharField(max_length=120)
-    facility_id = models.IntegerField()
-    salary = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'admin_users'
 
 class EmployeeEmergencyContact(models.Model):
     eec_id = models.AutoField(primary_key=True)
@@ -745,32 +798,6 @@ class Suppliers(models.Model):
         db_table = 'suppliers'
 
 
-class TempEmployees(models.Model):
-    te_id = models.AutoField(primary_key=True)
-    te_first_name = models.CharField(max_length=255)
-    te_last_name = models.CharField(max_length=255)
-    te_cnic = models.CharField(max_length=15)
-    te_attandance = models.CharField(max_length=10)
-    te_check_in = models.DateTimeField()
-    te_check_out = models.DateTimeField(blank=True, null=True)
-    te_facility_id = models.IntegerField()
-    te_supervisor_id = models.IntegerField()
-    te_designation = models.CharField(max_length=256, blank=True, null=True)
-    te_shift = models.CharField(max_length=256, blank=True, null=True)
-    te_shift_timing = models.CharField(max_length=256, blank=True, null=True)
-    te_phone = models.CharField(max_length=20)
-    te_email = models.CharField(max_length=255)
-    te_address = models.CharField(max_length=500)
-    te_image = models.TextField(blank=True, null=True)
-    te_salary = models.CharField(max_length=255)
-    te_created_at = models.DateTimeField()
-    te_status = models.IntegerField()
-    te_is_deleted = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'temp_employees'
-
 
 class Title(models.Model):
     title_id = models.AutoField(primary_key=True)
@@ -787,25 +814,7 @@ class Title(models.Model):
         db_table = 'title'
 
 
-class UserRole(models.Model):
-    page_id = models.AutoField(primary_key=True)
-    role_title = models.CharField(max_length=150)
-    permission = models.TextField()
-    page_status = models.CharField(max_length=3)
-    created_by = models.IntegerField()
-    modified_by = models.IntegerField()
-    date_created = models.DateTimeField()
-    date_updated = models.DateTimeField()
-    is_deleted = models.CharField(max_length=1)
-    facility_id = models.IntegerField()
-    department_id = models.IntegerField()
 
-    class Meta:
-        managed = False
-        db_table = 'user_role'
-
-    def __str__(self):
-        return str(self.facility_id)
 class Zone(models.Model):
     z_id = models.AutoField(primary_key=True)
     z_name = models.CharField(max_length=100)

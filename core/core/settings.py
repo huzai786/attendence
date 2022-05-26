@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,9 +28,9 @@ INSTALLED_APPS = [
     'attend',
     'corsheaders',
     'rest_framework',
-    'knox',
+    'rest_framework.authtoken', 
+    'rest_framework_simplejwt',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -122,14 +122,32 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_FILTER_BACKENDS': [
-#         'django_filters.rest_framework.DjangoFilterBackend'
-#     ],
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'knox.auth.TokenAuthentication',
-#     ],
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'jwt-auth'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'JWK_URL': None
+}
+
