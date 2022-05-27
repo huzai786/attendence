@@ -23,9 +23,11 @@ class AdminUsers(models.Model):
     facility_id = models.IntegerField()
     salary = models.IntegerField()
 
+    def __str__(self):
+        return str(self.user_name)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'admin_users'
 
 
@@ -190,7 +192,7 @@ class Employee(models.Model):
         db_table = 'employee'
 
     def __str__(self):
-        return str(self.emp_first_name + self.emp_last_name)
+        return str(self.emp_first_name)
 
 class EmployeeFacility(models.Model):
     ef_id = models.AutoField(primary_key=True)

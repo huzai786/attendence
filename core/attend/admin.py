@@ -6,7 +6,8 @@ from .models import (
     EmployeeFacility,
     Facility,
     UserRole,
-    AdminUsers
+    AdminUsers,
+    SiteSettings
 )
 
 
@@ -17,3 +18,4 @@ admin.site.register(Facility)
 admin.site.register(UserRole)
 admin.site.unregister(Group)
 admin.site.register(AdminUsers)
+admin.site.register(SiteSettings)
